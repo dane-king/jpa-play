@@ -17,16 +17,23 @@ import javax.sql.DataSource;
 @PropertySource("persistence-student.properties")
 @EnableTransactionManagement
 public class StudentJpaConfig {
+    private final Environment env;
+
     @Autowired
-    private Environment env;
+    public StudentJpaConfig(Environment env) {
+        this.env = env;
+    }
+
 
     @Bean
     public DataSource dataSource(){
         DriverManagerDataSource dataSource=new DriverManagerDataSource();
-        dataSource.setDriverClassName(env.getProperty("jdbc.driverClassName"));
-        dataSource.setUrl(env.getProperty("jdbc.url"));
-        dataSource.setUsername(env.getProperty("jdbc.user"));
-        dataSource.setPassword(env.getProperty("jdbc.pass"));
+        if(env!=null){
+            dataSource.setDriverClassName(env.getProperty("jdbc.driverClassName"));
+            dataSource.setUrl(env.getProperty("jdbc.url"));
+            dataSource.setUsername(env.getProperty("jdbc.user"));
+            dataSource.setPassword(env.getProperty("jdbc.pass"));
+        }
         return dataSource;
     }
 }

@@ -1,7 +1,13 @@
 package com.daneking.jpaplay.student;
 
+import com.daneking.jpaplay.common.Address;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Entity
@@ -11,9 +17,11 @@ public class Student {
 
     private String name;
 
-    public Student(){
+    private Integer age;
 
-    }
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Address> address=new ArrayList<>();
+
     public Student(int id, String name) {
         this.id = id;
         this.name = name;
@@ -34,6 +42,22 @@ public class Student {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Integer getAge() {
+        return age;
+    }
+
+    public void setAge(Integer age) {
+        this.age = age;
+    }
+
+    public List<Address> getAddress() {
+        return address;
+    }
+
+    public void setAddress(List<Address> address) {
+        this.address = address;
     }
 }
 
